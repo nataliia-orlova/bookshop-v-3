@@ -18,6 +18,7 @@ const Header = () => {
                                     <FaShoppingCart /> Cart
                                 </Nav.Link>
                             </LinkContainer>
+
                             <LinkContainer to='/login'>
                                 <Nav.Link>
                                     <FaUser /> Sign In

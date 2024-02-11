@@ -1,21 +1,28 @@
 import { useParams } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import {
-    Row,
-    Col,
-    Image,
-    ListGroup,
-    Card,
-    Button,
-    ListGroupItem,
-} from 'react-bootstrap';
+import { Row, Col, Image, ListGroup, Card, Button } from 'react-bootstrap';
 import Rating from '../components/Rating';
+import axios from 'axios';
 
-import { products } from '../products';
+const ProductScreen = () => {
+    const [product, setProduct] = useState({});
 
-function ProductScreen() {
     const { id: productId } = useParams();
-    const product = products.find((p) => p._id === productId);
+
+    useEffect(() => {
+        const fetchProduct = async () => {
+            const { data } = await axios.get(`/api/products/${productId}`);
+            setProduct(data);
+        };
+        fetchProduct();
+    }, [productId]);
+
+    if (!product) {
+        // Handle the case where the product is not found
+        // For example, you might want to redirect to an error page or display a message
+        return <div>Product not found</div>;
+    }
 
     return (
         <>
@@ -29,7 +36,7 @@ function ProductScreen() {
                 <Col md={3}>
                     <ListGroup variant='flush'>
                         <ListGroup.Item>
-                            <h3>{product.title}</h3>
+                            <h3>{product.name}</h3>
                         </ListGroup.Item>
                         <ListGroup.Item>
                             <Rating
@@ -81,6 +88,6 @@ function ProductScreen() {
             </Row>
         </>
     );
-}
+};
 
 export default ProductScreen;
