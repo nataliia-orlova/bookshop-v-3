@@ -1,6 +1,7 @@
 Implemented feature and functionality
 
 Frontend:
+login form
 
 Backend:
 
