@@ -1,12 +1,32 @@
 import { Badge, Navbar, Nav, Container, NavDropdown } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 import { FaShoppingCart, FaUser } from 'react-icons/fa';
 import { LinkContainer } from 'react-router-bootstrap';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { useLogoutMutation } from '../slices/usersApiSlice';
+import { logout } from '../slices/authSlice';
 const Header = () => {
     //  destructure what you need from the store
     const { cartItems } = useSelector((state) => state.cart);
     const { userInfo } = useSelector((state) => state.auth);
-    const logoutHandler = () => {};
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const [logoutApiCall] = useLogoutMutation();
+
+    const logoutHandler = async () => {
+        try {
+            await logoutApiCall().unwrap();
+            dispatch(logout());
+            // here we need to reset cart state for when a user logs out so the next
+            // user doesn't inherit the previous users cart and shipping
+
+            navigate('/login');
+        } catch (error) {
+            console.error(error);
+        }
+    };
     return (
         <header>
             <Navbar bg='dark' variant='dark' expand='lg' collapseOnSelect>

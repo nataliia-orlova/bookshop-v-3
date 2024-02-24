@@ -2,6 +2,8 @@ Implemented feature and functionality
 
 Frontend:
 login form
+register
+logout
 
 Backend:
 
