@@ -26,4 +26,20 @@ app.get('/', (req, res) => {
 app.use('/api/products', productRoutes);
 app.use('/api/users', userRoutes);
 
+//  if in production - set the react build folder frontend/build
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static(path.join(__dirname, '/frontend/build')));
+    //  any route that is not from our api routes listed above - will be redirected to index.html
+    app.get('*', (req, res) =>
+        res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'))
+    );
+    //  if not in production use react server
+} else {
+    const __dirname = path.resolve();
+    app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
+    app.get('/', (req, res) => {
+        res.send('API is running....');
+    });
+}
+
 app.listen(port, () => console.log(`server running on port ${port}`));
