@@ -7,7 +7,7 @@ import connectDB from './config/db.js';
 // import products from './data/products.js';
 import productRoutes from './routes/productRoutes.js';
 import userRoutes from './routes/userRoutes.js';
-const port = process.env.PORT || 5000; //   to acces env vars write like so and a fallback
+const port = process.env.PORT || 3001; //   to acces env vars write like so and a fallback
 
 connectDB(); // connect to MongoDB
 
@@ -43,4 +43,8 @@ if (process.env.NODE_ENV === 'production') {
     });
 }
 
-app.listen(port, () => console.log(`server running on port ${port}`));
+app.listen(port, () =>
+    console.log(
+        `Server running in ${process.env.NODE_ENV} mode on port ${port}`
+    )
+);

@@ -1,6 +1,12 @@
 import asyncHandler from '../middleware/asyncHandler.js';
 import Product from '../models/productModel.js';
 
+// Controllers:
+
+// Controllers are JavaScript functions or classes that handle the logic for specific routes.
+// They contain the code that processes incoming requests, interacts with data (if needed), and sends back a response.
+// For instance, a controller for "/products" might retrieve a list of products from a database and send it as a response.
+
 // @desc    Fetch all products
 // @route   GET /api/products
 // @access  Public
